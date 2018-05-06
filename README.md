@@ -4,7 +4,7 @@ Machine learning bot for Chrome's offline dinosaur game that uses [brain.js](htt
 
 ## How to use
 ### Setup
-1. Install with `npm install git+https://git@github.com/JohanWinther/Dinobot.git`.
+1. Install with `git clone https://github.com/JohanWinther/Dinobot.git` and then `npm install`.
 2. Start server with `npm start`.
 3. Navigate to [localhost:3000](http://localhost:3000).
 
