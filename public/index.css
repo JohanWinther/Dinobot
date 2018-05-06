@@ -75,6 +75,28 @@ html, body {
   font-weight: bolder;
 }
 
+.bar, .slider {
+  margin-top: 15px;
+  height: 20px;
+}
+
+.slider {
+  height: fit-content;
+}
+
+.bar > span, .slider > input {
+  background: rgb(83, 83, 83);
+  color: rgb(83, 83, 83);
+  display: block;
+  float: left;
+  width: 95%;
+}
+
+.square-box.bar:before, .square-box.slider:before{
+  content: "";
+  display: none;
+}
+
 /* Offline page */
 
 .offline .interstitial-wrapper {

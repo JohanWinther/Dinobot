@@ -5,6 +5,8 @@ var keyState = {
 const tRexYMax = 93;
 const obstacleYMax = 105;
 const obstacleXMax = 600;
+var threshSpace = 0.15;
+var threshDown = 0.15;
 window.onload = function(){
 	document.addEventListener("keydown", startProgram);
 	document.addEventListener("keydown",updateKeyState);
@@ -12,6 +14,18 @@ window.onload = function(){
 
 	window.spaceButton = document.querySelector("div#statusSpace div.square-content");
 	window.downButton = document.querySelector("div#statusDown div.square-content");
+	window.spaceBar = document.querySelector("div#statusSpace div.square-box.bar > span");
+	window.downBar = document.querySelector("div#statusDown div.square-box.bar > span");
+	window.spaceSlider = document.querySelector("div#statusSpace div.square-box input");
+	window.downSlider = document.querySelector("div#statusDown div.square-box input");
+	spaceSlider.addEventListener("change", function() {
+		threshSpace = spaceSlider.value;
+		console.log(threshSpace);
+	}, false);
+	downSlider.addEventListener("change", function() {
+		threshDown = downSlider.value;
+		console.log(threshDown);
+	}, false);
 };
 
 function startProgram(e) {
@@ -51,7 +65,7 @@ function startProgram(e) {
 				activation: "relu", // activation function
 				hiddenLayers: [10,10],
 				iterations: 1000,
-				learningRate: 0.5 // global learning rate, useful when training using streams
+				learningRate: 0.15 // global learning rate, useful when training using streams
 			});
 			net.fromJSON(jsonNet);
 			startPlaying();
@@ -121,27 +135,33 @@ function Play() {
 	*/
 
 	// Neural network bot
+	if (R.tRex.status == "CRASHED") {
+		clearInterval(window.intervalID);
+		setTimeout(startPlaying, 2000);
+	}
 	let output = window.net.run(getSample());
 	let keys = {
 		space: output[0],
 		down: output[1]
 	}
+	spaceBar.style.width = Math.ceil(keys.space*100)+"%";
+	downBar.style.width = Math.ceil(keys.down*100)+"%";
 
-	if (window.keyState.space == 0 && keys.space > 0.5) {
+	if (window.keyState.space == 0 && keys.space > threshSpace) {
 		let e = new Event('keydown');
 		e.which = e.keyCode = 32;
 		document.dispatchEvent(e);
-	} else if (window.keyState.space == 1 && keys.space < 0.5) {
+	} else if (window.keyState.space == 1 && keys.space < threshSpace) {
 		let e = new Event('keyup');
 		e.which = e.keyCode = 32;
 		document.dispatchEvent(e);
 	}
 
-	if (window.keyState.down == 0 && keys.down > 0.5) {
+	if (window.keyState.down == 0 && keys.down > threshDown) {
 		let e = new Event('keydown');
 		e.which = e.keyCode = 40;
 		document.dispatchEvent(e);
-	} else if (window.keyState.down == 1 && keys.down < 0.5) {
+	} else if (window.keyState.down == 1 && keys.down < threshDown) {
 		let e = new Event('keyup');
 		e.which = e.keyCode = 40;
 		document.dispatchEvent(e);
@@ -154,6 +174,7 @@ function getSample() {
 		//+ (R.tRex.status == "JUMPING"),
 		//+ (R.tRex.status == "DUCKING"),
 		//+ (R.tRex.status == "RUNNING"),
+		//R.currentSpeed/20,
 		R.horizon.obstacles[0] === undefined ? 0 : Math.max(0,1-R.horizon.obstacles[0].xPos/obstacleXMax),
 		R.horizon.obstacles[0] === undefined ? 0 : Math.max(0,1-R.horizon.obstacles[0].yPos/obstacleYMax),
 		R.horizon.obstacles[1] === undefined ? 0 : Math.max(0,1-R.horizon.obstacles[1].xPos/obstacleXMax),
