@@ -1,7 +1,7 @@
 {
   "name": "dinobot",
   "version": "1.0.0",
-  "description": "the trex runner game extracted from chrome offline err page.",
+  "description": "Machine learning bot for Chrome's offline dinosaur game.",
   "main": "server.js",
   "dependencies": {
     "express": "^4.16.3",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wayou/t-rex-runner.git"
+    "url": "git+https://github.com/JohanWinther/Dinobot.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "BSD",
   "bugs": {
-    "url": "https://github.com/wayou/t-rex-runner/issues"
+    "url": "https://github.com/JohanWinther/Dinobot/issues"
   },
-  "homepage": "https://github.com/wayou/t-rex-runner#readme"
+  "homepage": "https://github.com/JohanWinther/Dinobot#readme"
 }
