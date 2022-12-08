@@ -4,7 +4,7 @@
   "description": "Machine learning bot for Chrome's offline dinosaur game.",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "node-static": "^0.7.10",
     "nodemon": "^1.17.4",
     "path": "^0.12.7"
